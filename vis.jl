@@ -50,12 +50,17 @@ maximum(data[21]["data"])
 last = data[18]["data"]
 
 plot(renew./last)
-minimum(renew./last)
-maximum(renew./last)
+@show minimum(renew./last)*(sum(last)/sum(renew))
+@show minimum(renew./last)
+@show maximum(renew./last)
 
 
 plot(coaletc./last)
-minimum(coaletc./last)
-maximum(coaletc./last)
-
-plot((coaletc .+ renew)./last)
+@show minimum(coaletc./last)
+@show maximum(coaletc./last)
+A = float(zeros(length(data[1]["xAxisValues"])))
+for i in [1:2; 4:17]
+    A .+= data[i]["data"]
+end
+plot((A)./last)
+plot((coaletc .+ renew .+ other)./last)
