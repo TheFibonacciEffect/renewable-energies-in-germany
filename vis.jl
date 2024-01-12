@@ -13,6 +13,7 @@ tot = coaletc .+ renew
 # plot!(p, data[1]["xAxisValues"], coaletc./tot, label="Coal etc")
 plot!(p, data[1]["xAxisValues"], renew./tot, label="Renewables/(Renewables+Coal+Gas)")
 @show avg = sum(renew)/sum(tot)
+@show min = minimum(renew./tot)
 plot!(p, data[1]["xAxisValues"], avg*ones(length(data[1]["xAxisValues"])), label="Average", linestyle=:dash)
 savefig(p, "renewables proportion.png")
 p
