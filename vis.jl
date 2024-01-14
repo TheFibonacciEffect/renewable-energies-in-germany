@@ -71,26 +71,34 @@ plot(coaletc./last)
 plot((all_except_nuclear)./last)
 plot((coaletc .+ renew .+ other)./last)
 
-histogram(renew./last, label="Renewables/(Electronic Load)",norm=:probability, bins=0:0.2:1.2)
+
+bins = 0:0.2:1.2
+histogram(renew./last, label="Renewables/(Electronic Load)",norm=:probability, bins=bins)
 title!("Renewables vs electronic load in 2023")
 xlabel!("Proportion of the total energy demand per hour in 2023")
 ylabel!("Proportion of hours in 2023")
 savefig("renewables proportion histogram.png")
 
-histogram(wind_solar./last, label="(Wind + Solar)/(Electronic Load)",norm=:probability, bins=0:0.2:1.2)
+histogram(wind_solar./last, label="(Wind + Solar)/(Electronic Load)",norm=:probability, bins=bins)
 title!("Wind + Solar vs electronic load in 2023")
 xlabel!("Proportion of the total energy demand per hour in 2023")
 ylabel!("Proportion of hours in 2023")
 savefig("ws proportion histogram.png")
 
-histogram(wind_solar_storage./last, label="(Wind + Solar + Storage)/(Electronic Load)",norm=:probability, bins=0:0.2:1.2)
+histogram(wind_solar_storage./last, label="(Wind + Solar + Storage)/(Electronic Load)",norm=:probability, bins=bins)
 title!("Wind + Solar + Storage vs electronic load in 2023")
 xlabel!("Proportion of the total energy demand per hour in 2023")
 ylabel!("Proportion of hours in 2023")
 savefig("ws storage proportion histogram.png")
 
-histogram(resudallast./last, label="Residual Load/(Electronic Load)",norm=:probability, bins=0:0.2:1.2)
+histogram(resudallast./last, label="Residual Load/(Electronic Load)",norm=:probability, bins=bins)
 title!("Residual Load vs electronic load in 2023")
 xlabel!("Proportion of the total energy demand per hour in 2023")
 ylabel!("Proportion of hours in 2023")
 savefig("residual load proportion histogram.png")
+
+histogram(coaletc./last, label="Coal + Gas/(Electronic Load)",norm=:probability, bins=[0:0.1:1.1;])
+title!("Coal + Gas vs electronic load in 2023")
+xlabel!("Proportion of the total energy demand per hour in 2023")
+ylabel!("Proportion of hours in 2023")
+savefig("coal gas proportion histogram.png")

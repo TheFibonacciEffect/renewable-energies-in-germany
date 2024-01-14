@@ -22,3 +22,5 @@ histogram combining wind, solar and storage (the power of Hydro pumped storage c
 reiduallast ist die last, die durch nicht fluktuierende erzeuger gedeckt werden muss
 
 ![Proportion of renewables](<renewables proportion.png>)
+
+![coalgas](<coal gas proportion histogram.png>)
