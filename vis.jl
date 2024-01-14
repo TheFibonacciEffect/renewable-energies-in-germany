@@ -1,7 +1,7 @@
 using JSON
 using Plots
 
-data = JSON.parsefile("./year2023.json")
+data = JSON.parsefile("./frauenhofer january 2023.json")
 
 
 # "Pumpspeicher Verbrauch"                  1
