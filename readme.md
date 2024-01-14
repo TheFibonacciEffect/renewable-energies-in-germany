@@ -16,4 +16,9 @@ same histogram only includeing wind and solar
 
 histogram combining wind, solar and storage (the power of Hydro pumped storage consumption is actually negative as it should be)
 
+
+![residual load](<residual load proportion histogram.png>)
+
+reiduallast ist die last, die durch nicht fluktuierende erzeuger gedeckt werden muss
+
 ![Proportion of renewables](<renewables proportion.png>)

@@ -38,6 +38,7 @@ other = data[13]["data"]
 wind_solar = data[15]["data"] + data[16]["data"] + data[17]["data"] 
 wind_solar_storage = data[15]["data"] + data[16]["data"] + data[17]["data"]  + data[11]["data"] .+ data[12]["data"]+ data[1]["data"]
 combined_renew_coal_other = coaletc .+ renew .+ other
+resudallast = data[19]["data"] # https://de.wikipedia.org/wiki/Residuallast
 
 all_except_nuclear = float(zeros(length(data[1]["xAxisValues"])))
 for i in [1:2; 4:17]
@@ -87,3 +88,9 @@ title!("Wind + Solar + Storage vs electronic load in 2023")
 xlabel!("Proportion of the total energy demand per hour in 2023")
 ylabel!("Proportion of hours in 2023")
 savefig("ws storage proportion histogram.png")
+
+histogram(resudallast./last, label="Residual Load/(Electronic Load)",norm=:probability, bins=0:0.2:1.2)
+title!("Residual Load vs electronic load in 2023")
+xlabel!("Proportion of the total energy demand per hour in 2023")
+ylabel!("Proportion of hours in 2023")
+savefig("residual load proportion histogram.png")
