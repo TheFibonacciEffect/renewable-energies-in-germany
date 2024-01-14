@@ -24,3 +24,7 @@ reiduallast ist die last, die durch nicht fluktuierende erzeuger gedeckt werden 
 ![Proportion of renewables](<renewables proportion.png>)
 
 ![coalgas](<coal gas proportion histogram.png>)
+
+The prices are also very interresting, we can see that the chance that you can get 1MWh of electricity for -5€ to 5€ is the same propabilty of getting it for 65 to 75 or 135 to 145 €
+
+![auction prices](<day ahead auction prices.png>)
