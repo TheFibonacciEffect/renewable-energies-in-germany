@@ -26,7 +26,7 @@ data = JSON.parsefile("./year2023.json")
 # "Anteil EE an der Erzeugung",             20
 # "Anteil EE an der Last",     21
 
-for key in [15,16,17,5,4,10,11,12,13]
+for key in [1,15,16,17,5,4,10,11,12,13]
     source = data[key]
     println(source["name"]["en"], " ", key)
 end
