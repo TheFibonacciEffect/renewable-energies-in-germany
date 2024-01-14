@@ -1,7 +1,7 @@
 using JSON
 using Plots
 
-data = JSON.parsefile("./year2023.json")
+data = JSON.parsefile("./year2022.json")
 
 
 # "Pumpspeicher Verbrauch"                  1
@@ -48,10 +48,10 @@ const Residual_load_index=19
 const Renewable_share_of_generation_index=20
 const Renewable_share_of_load_index=21
 const Day_Ahead_Auction_index=22
-for key in keys(data)
-    source = data[key]
-    println("const ",replace(source["name"]["en"]," "=>"_"),"_index", "=", key)
-end
+# for key in keys(data)
+#     source = data[key]
+#     println("const ",replace(source["name"]["en"]," "=>"_"),"_index", "=", key)
+# end
 
 d(i)::Vector{Float64} = data[i]["data"]
 # define the groups of the sources
