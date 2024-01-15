@@ -53,7 +53,9 @@ for key in keys(data)
     println("const ",replace(source["name"]["en"]," "=>"_"),"_index", "=", key)
 end
 
-d(i)::Vector{Float64} = data[i]["data"]
+d(i)::Vector{Float64} = replace(data[i]["data"], nothing => NaN)
+
+
 # define the groups of the sources
 coaletc = data[6]["data"] .+ data[7]["data"] .+ data[8]["data"] + data[9]["data"]
 renew = data[15]["data"] .+ data[16]["data"] .+ data[17]["data"] + data[5]["data"] .+ data[4]["data"] .+ data[10]["data"] .+ data[11]["data"] .+ data[12]["data"]
@@ -131,3 +133,19 @@ ylabel!("Number of hours in 2023")
 xlabel!("Price of electricity in €/MWh")
 title!("Day Ahead Auction prices in 2023")
 savefig("day ahead auction prices.png")
+
+n = d(Day_Ahead_Auction_index) |> length
+# 
+p = plot()
+plot!(range(0,12,n) ,d(Solar_index).*d(Day_Ahead_Auction_index), label="Solar", color=:orange)
+xlabel!("Month in 2023")
+title!("Day Ahead Auction prices in 2023")
+savefig("Day ahead auction prices.png")
+
+bins = -10:5:60 
+p1 = histogram(range(0,12,n) ,d(Day_Ahead_Auction_index) .* (d(Solar_index) .+ d(Wind_onshore_index))/2, label="(Solar + Wind )*price/load [€/W]", color=:orange, bins=bins)
+p2 = histogram(range(0,12,n) ,d(Day_Ahead_Auction_index) .* d(Fossil_gas_index), label="Gas*price/load [€/W]", color=:blue, bins=bins)
+p3 = histogram(range(0,12,n) ,d(Day_Ahead_Auction_index) .* d(Nuclear_index), label="Nuclear*price/load [€/W]", color=:red, bins=bins)
+plot(p1,p2,p3, layout=(3,1), legend=:topright)
+xlabel!("Price/W in 2023")
+savefig("price per watt.png")
