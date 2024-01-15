@@ -135,17 +135,9 @@ title!("Day Ahead Auction prices in 2023")
 savefig("day ahead auction prices.png")
 
 n = d(Day_Ahead_Auction_index) |> length
-# 
-p = plot()
-plot!(range(0,12,n) ,d(Solar_index).*d(Day_Ahead_Auction_index), label="Solar", color=:orange)
-xlabel!("Month in 2023")
+
+scatter((d(Solar_index).+d(Wind_offshore_index).+d(Wind_onshore_index))./3,d(Day_Ahead_Auction_index), label="Solar", color=:orange)
+xlabel!("mean Solar + Wind production")
+ylabel!("auction price")
 title!("Day Ahead Auction prices in 2023")
 savefig("Day ahead auction prices.png")
-
-bins = -10:5:60 
-p1 = histogram(range(0,12,n) ,d(Day_Ahead_Auction_index) .* (d(Solar_index) .+ d(Wind_onshore_index))/2, label="(Solar + Wind )*price/load [€/W]", color=:orange, bins=bins)
-p2 = histogram(range(0,12,n) ,d(Day_Ahead_Auction_index) .* d(Fossil_gas_index), label="Gas*price/load [€/W]", color=:blue, bins=bins)
-p3 = histogram(range(0,12,n) ,d(Day_Ahead_Auction_index) .* d(Nuclear_index), label="Nuclear*price/load [€/W]", color=:red, bins=bins)
-plot(p1,p2,p3, layout=(3,1), legend=:topright)
-xlabel!("Price/W in 2023")
-savefig("price per watt.png")
