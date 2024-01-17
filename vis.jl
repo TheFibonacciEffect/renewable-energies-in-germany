@@ -134,9 +134,9 @@ xlabel!("Price of electricity in €/MWh")
 title!("Day Ahead Auction prices in 2023")
 savefig("day ahead auction prices.png")
 
+using StatsPlots
 n = d(Day_Ahead_Auction_index) |> length
-
-scatter((d(Solar_index).+d(Wind_offshore_index).+d(Wind_onshore_index))./3,d(Day_Ahead_Auction_index), label="Solar", color=:orange)
+marginalkde((d(Solar_index).+d(Wind_offshore_index).+d(Wind_onshore_index))./3,d(Day_Ahead_Auction_index), label="Solar")
 xlabel!("mean Solar + Wind production")
 ylabel!("auction price")
 title!("Day Ahead Auction prices in 2023")
