@@ -146,10 +146,24 @@ savefig("plots/day ahead auction prices.png")
 histogram2d(d(Day_Ahead_Auction_index), (d(Solar_index).+d(Wind_offshore_index).+d(Wind_onshore_index))./3 ./d(Load_index), bins=(0:5:200,20), label="Solar + Wind", norm=:probability, show_empty_bins=true)
 xlabel!("Price of electricity in €/MWh")
 ylabel!("Solar + Wind production / Load")
+savefig("plots/price vs solar wind.png")
 
-
-histogram2d(d(Day_Ahead_Auction_index), d(Residual_load_index)./d(Load_index), bins=(-40:20:200,20), label="Solar + Wind", norm=:probability, show_empty_bins=true)
+histogram2d(d(Day_Ahead_Auction_index), d(Residual_load_index)./d(Load_index), bins=(10 .^ range(1.7,2.3,50), 10 .^ range(-.5,0,50)), xscale=:log10, yscale=:log10, label="Solar + Wind", norm=:probability, show_empty_bins=true)
+histogram2d(d(Day_Ahead_Auction_index), d(Residual_load_index)./d(Load_index), bins=(10 .^ range(1.7,2.3,50), 50), xscale=:log10, label="Solar + Wind", norm=:probability, show_empty_bins=true)
+histogram2d(d(Day_Ahead_Auction_index), d(Residual_load_index)./d(Load_index), bins=(range(-20,250,50), 50), label="Solar + Wind", norm=:probability, show_empty_bins=true)
 xlabel!("Price of electricity in €/MWh")
 ylabel!("Residual Load / Load")
 title!("Price of electricity vs Residual Load in 2023")
 savefig("plots/price vs residual load.png")
+
+# those two are more or less uncorrrelated
+histogram2d(d(Day_Ahead_Auction_index), d(Cross_border_electricity_trading_index)./d(Load_index), bins=(range(-20,250,50), 50), label="Solar + Wind", norm=:probability, show_empty_bins=true)
+xlabel!("Price of electricity in €/MWh")
+ylabel!("Cross border electricity trading / Load")
+title!("Price of electricity vs electricity trading")
+savefig("plots/price vs cross border electricity trading.png")
+
+x = float.(data[1]["xAxisValues"])
+histogram2d( x ./ maximum(x) * 12, wind_solar./last, bins=(12,10), norm=:probability, show_empty_bins=false)
+
+N = 20
