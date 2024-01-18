@@ -28,3 +28,7 @@ reiduallast ist die last, die durch nicht fluktuierende erzeuger gedeckt werden 
 The prices are also very interresting, we can see that the chance that you can get 1MWh of electricity for -5€ to 5€ is the same propabilty of getting it for 65 to 75 or 135 to 145 €
 
 ![auction prices](<plots/day ahead auction prices.png>)
+
+Higher residual load leads to higher prices of electricits (WOW, who would have thought XD)
+Below a threshold of lower than 0.25% the energy prices dropped significantly.
+![res vs price](<plots/price vs residual load.png>)

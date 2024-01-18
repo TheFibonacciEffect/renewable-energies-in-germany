@@ -76,7 +76,7 @@ plot!(p, data[1]["xAxisValues"], renew./combined_renew_coal_other, label="Renewa
 @show min = minimum(renew./combined_renew_coal_other)
 plot!(p, data[1]["xAxisValues"], avg*ones(length(data[1]["xAxisValues"])), label="Average", linestyle=:dash)
 p
-savefig(p, "renewables proportion.png")
+savefig(p, "plots/renewables proportion.png")
 
 ee_vs_last = data[21]["data"]
 min = minimum(data[21]["data"])
@@ -102,42 +102,54 @@ histogram(renew./last, label="Renewables/(Electronic Load)",norm=:probability, b
 title!("Renewables vs electronic load in 2023")
 xlabel!("Proportion of the total energy demand per hour in 2023")
 ylabel!("Proportion of hours in 2023")
-savefig("renewables proportion histogram.png")
+savefig("plots/renewables proportion histogram.png")
 
 histogram(wind_solar./last, label="(Wind + Solar)/(Electronic Load)",norm=:probability, bins=bins)
 title!("Wind + Solar vs electronic load in 2023")
 xlabel!("Proportion of the total energy demand per hour in 2023")
 ylabel!("Proportion of hours in 2023")
-savefig("ws proportion histogram.png")
+savefig("plots/ws proportion histogram.png")
 
 histogram(wind_solar_storage./last, label="(Wind + Solar + Storage)/(Electronic Load)",norm=:probability, bins=bins)
 title!("Wind + Solar + Storage vs electronic load in 2023")
 xlabel!("Proportion of the total energy demand per hour in 2023")
 ylabel!("Proportion of hours in 2023")
-savefig("ws storage proportion histogram.png")
+savefig("plots/ws storage proportion histogram.png")
 
 histogram(resudallast./last, label="Residual Load/(Electronic Load)",norm=:probability, bins=bins)
 title!("Residual Load vs electronic load in 2023")
 xlabel!("Proportion of the total energy demand per hour in 2023")
 ylabel!("Proportion of hours in 2023")
-savefig("residual load proportion histogram.png")
+savefig("plots/residual load proportion histogram.png")
 
 histogram(coaletc./last, label="Coal + Gas/(Electronic Load)",norm=:probability, bins=[0:0.1:1.1;])
 title!("Coal + Gas vs electronic load in 2023")
 xlabel!("Proportion of the total energy demand per hour in 2023")
 ylabel!("Proportion of hours in 2023")
-savefig("coal gas proportion histogram.png")
+savefig("plots/coal gas proportion histogram.png")
 
 histogram(d(Day_Ahead_Auction_index), label="Day Ahead Auction",norm=:probability,bins=-5:10:200) 
 ylabel!("Number of hours in 2023")
 xlabel!("Price of electricity in €/MWh")
 title!("Day Ahead Auction prices in 2023")
-savefig("day ahead auction prices.png")
+savefig("plots/day ahead auction prices.png")
 
-using StatsPlots
-n = d(Day_Ahead_Auction_index) |> length
-marginalkde((d(Solar_index).+d(Wind_offshore_index).+d(Wind_onshore_index))./3,d(Day_Ahead_Auction_index), label="Solar")
-xlabel!("mean Solar + Wind production")
-ylabel!("auction price")
-title!("Day Ahead Auction prices in 2023")
-savefig("Day ahead auction prices.png")
+# using StatsPlots
+# n = d(Day_Ahead_Auction_index) |> length
+# marginalkde((d(Solar_index).+d(Wind_offshore_index).+d(Wind_onshore_index))./3,d(Day_Ahead_Auction_index), label="Solar")
+# xlabel!("mean Solar + Wind production")
+# ylabel!("auction price")
+# title!("Day Ahead Auction prices in 2023")
+# savefig("plots/Day ahead auction prices.png")
+
+
+histogram2d(d(Day_Ahead_Auction_index), (d(Solar_index).+d(Wind_offshore_index).+d(Wind_onshore_index))./3 ./d(Load_index), bins=(0:5:200,20), label="Solar + Wind", norm=:probability, show_empty_bins=true)
+xlabel!("Price of electricity in €/MWh")
+ylabel!("Solar + Wind production / Load")
+
+
+histogram2d(d(Day_Ahead_Auction_index), d(Residual_load_index)./d(Load_index), bins=(-40:20:200,20), label="Solar + Wind", norm=:probability, show_empty_bins=true)
+xlabel!("Price of electricity in €/MWh")
+ylabel!("Residual Load / Load")
+title!("Price of electricity vs Residual Load in 2023")
+savefig("plots/price vs residual load.png")
