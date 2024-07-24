@@ -1,5 +1,6 @@
 using JSON
 using Plots
+using Measurements
 
 data = JSON.parsefile("./year2023.json")
 
@@ -167,3 +168,38 @@ x = float.(data[1]["xAxisValues"])
 histogram2d( x ./ maximum(x) * 12, wind_solar./last, bins=(12,10), norm=:probability, show_empty_bins=false)
 
 N = 20
+using Unitful
+using AdditionalUnits
+# Greenhouse gas emissions: https://ourworldindata.org/safest-sources-of-energy
+dt = 1u"yr"/length(wind_solar)
+# per TWh
+deaths = Dict(
+    "Coal" => 24.6/(u"TW*hr"),
+    "Oil"  => 18.6/(u"TW*hr"),
+    "Natural Gas" => 2.8/(u"TW*hr"),
+    "Biomass" => 4.6/(u"TW*hr"),
+    "Hyropower" => 1.3/(u"TW*hr"),
+    "Wind" => 0.04/(u"TW*hr"),
+    "Nuclear" => 0.03/(u"TW*hr"),
+    "Solar" => 0.02/(u"TW*hr")
+)
+deaths = deaths
+
+# per GWh
+co2 = Dict(
+    "Coal" => 970u"ton"/u"GW*hr",
+    "Oil" => 720u"ton"/u"GW*hr",
+    "Natural Gas" => 440u"ton"/u"GW*hr",
+    "Biomass" => ((78+230)/2 ± (230-78)/2)u"ton"/u"GW*hr",
+    "Hydropower" => 24u"ton"/u"GW*hr",
+    "Wind" => 11u"ton"/u"GW*hr",
+    "Nuclear" => 6u"ton"/u"GW*hr",
+    "Solar" => 53u"ton"/u"GW*hr"
+)
+
+
+uconvert(NoUnits,sum(d(Solar_index)*u"MW"*dt*deaths["Solar"]))
+uconvert(u"ton",sum(d(Solar_index)*u"MW"*dt*co2["Solar"]))
+
+
+uconvert(u"TWh", sum(d(Load_index)*u"MW"*dt) ) # energy demand in germany per year?
