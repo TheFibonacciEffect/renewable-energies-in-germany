@@ -22,10 +22,10 @@ data = JSON.parsefile("./year2023.json")
 # "Wind Offshore",     15
 # "Wind Onshore",      16
 # "Solar",     17
-# "Last",      18
-# "Residuallast",      19
+# "load",      18
+# "Residualload",      19
 # "Anteil EE an der Erzeugung",             20
-# "Anteil EE an der Last",     21
+# "Anteil EE an der load",     21
 
 const Hydro_pumped_storage_consumption_index=1
 const Cross_border_electricity_trading_index=2
@@ -64,7 +64,7 @@ other = data[13]["data"]
 wind_solar = data[15]["data"] + data[16]["data"] + data[17]["data"] 
 wind_solar_storage = data[15]["data"] + data[16]["data"] + data[17]["data"]  + data[11]["data"] .+ data[12]["data"]+ data[1]["data"]
 combined_renew_coal_other = coaletc .+ renew .+ other
-resudallast = data[19]["data"] # https://de.wikipedia.org/wiki/Residuallast
+resudalload = data[19]["data"] # https://de.wikipedia.org/wiki/Residualload
 
 all_except_nuclear = float(zeros(length(data[1]["xAxisValues"])))
 for i in [1:2; 4:17]
@@ -79,51 +79,51 @@ plot!(p, data[1]["xAxisValues"], avg*ones(length(data[1]["xAxisValues"])), label
 p
 savefig(p, "plots/renewables proportion.png")
 
-ee_vs_last = data[21]["data"]
+ee_vs_load = data[21]["data"]
 min = minimum(data[21]["data"])
 maximum(data[21]["data"])
-last = data[18]["data"]
+load = data[18]["data"]
 
 
-plot(renew./last)
-@show minimum(renew./last)*(sum(last)/sum(renew))
-@show minimum(renew./last)
-@show maximum(renew./last)
+plot(renew./load)
+@show minimum(renew./load)*(sum(load)/sum(renew))
+@show minimum(renew./load)
+@show maximum(renew./load)
 
 
-plot(coaletc./last)
-@show minimum(coaletc./last)
-@show maximum(coaletc./last)
-plot((all_except_nuclear)./last)
-plot((coaletc .+ renew .+ other)./last)
+plot(coaletc./load)
+@show minimum(coaletc./load)
+@show maximum(coaletc./load)
+plot((all_except_nuclear)./load)
+plot((coaletc .+ renew .+ other)./load)
 
 
 bins = 0:0.2:1.2
-histogram(renew./last, label="Renewables/(Electronic Load)",norm=:probability, bins=bins)
+histogram(renew./load, label="Renewables/(Electronic Load)",norm=:probability, bins=bins)
 title!("Renewables vs electronic load in 2023")
 xlabel!("Proportion of the total energy demand per hour in 2023")
 ylabel!("Proportion of hours in 2023")
 savefig("plots/renewables proportion histogram.png")
 
-histogram(wind_solar./last, label="(Wind + Solar)/(Electronic Load)",norm=:probability, bins=bins)
+histogram(wind_solar./load, label="(Wind + Solar)/(Electronic Load)",norm=:probability, bins=bins)
 title!("Wind + Solar vs electronic load in 2023")
 xlabel!("Proportion of the total energy demand per hour in 2023")
 ylabel!("Proportion of hours in 2023")
 savefig("plots/ws proportion histogram.png")
 
-histogram(wind_solar_storage./last, label="(Wind + Solar + Storage)/(Electronic Load)",norm=:probability, bins=bins)
+histogram(wind_solar_storage./load, label="(Wind + Solar + Storage)/(Electronic Load)",norm=:probability, bins=bins)
 title!("Wind + Solar + Storage vs electronic load in 2023")
 xlabel!("Proportion of the total energy demand per hour in 2023")
 ylabel!("Proportion of hours in 2023")
 savefig("plots/ws storage proportion histogram.png")
 
-histogram(resudallast./last, label="Residual Load/(Electronic Load)",norm=:probability, bins=bins)
+histogram(resudalload./load, label="Residual Load/(Electronic Load)",norm=:probability, bins=bins)
 title!("Residual Load vs electronic load in 2023")
 xlabel!("Proportion of the total energy demand per hour in 2023")
 ylabel!("Proportion of hours in 2023")
 savefig("plots/residual load proportion histogram.png")
 
-histogram(coaletc./last, label="Coal + Gas/(Electronic Load)",norm=:probability, bins=[0:0.1:1.1;])
+histogram(coaletc./load, label="Coal + Gas/(Electronic Load)",norm=:probability, bins=[0:0.1:1.1;])
 title!("Coal + Gas vs electronic load in 2023")
 xlabel!("Proportion of the total energy demand per hour in 2023")
 ylabel!("Proportion of hours in 2023")
@@ -165,7 +165,7 @@ title!("Price of electricity vs electricity trading")
 savefig("plots/price vs cross border electricity trading.png")
 
 x = float.(data[1]["xAxisValues"])
-histogram2d( x ./ maximum(x) * 12, wind_solar./last, bins=(12,10), norm=:probability, show_empty_bins=false)
+histogram2d( x ./ maximum(x) * 12, wind_solar./load, bins=(12,10), norm=:probability, show_empty_bins=false)
 
 N = 20
 using Unitful
