@@ -67,3 +67,5 @@ all_except_nuclear = float(zeros(length(data[1]["xAxisValues"])))
 for i in [1:2; 4:17]
     all_except_nuclear .+= data[i]["data"]
 end
+wind = data[Wind_offshore_index]["data"] .+ data[Wind_onshore_index]["data"]
+solar = data[Solar_index]["data"]

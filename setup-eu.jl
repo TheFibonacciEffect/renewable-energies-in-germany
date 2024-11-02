@@ -72,3 +72,5 @@ wind_solar = data[Wind_offshore_index]["data"] + data[Wind_onshore_index]["data"
 wind_solar_storage = data[Wind_offshore_index]["data"] + data[Wind_onshore_index]["data"] + data[Solar_index]["data"]  + data[Hydro_water_reservoir_index]["data"] .+ data[Hydro_pumped_storage_index]["data"]+ data[Hydro_pumped_storage_consumption_index]["data"]
 combined_renew_coal_other = coaletc .+ renew .+ other
 resudallast = data[Residual_load_index]["data"] # https://de.wikipedia.org/wiki/Residuallast
+wind = data[Wind_offshore_index]["data"] .+ data[Wind_onshore_index]["data"]
+solar = data[Solar_index]["data"]
